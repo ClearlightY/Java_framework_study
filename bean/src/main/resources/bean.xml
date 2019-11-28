@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--把对象的创建交给spring来管理-->
+    <!--spring对bean的管理细节
+        1. 创建bean的三种方式
+        2. bean对象的作用范围
+        3. bean对象的生命周期
+    -->
+
+    <!--    <bean id="accountService" class="top.clearlight.service.impl.AccountServiceImpl"></bean>-->
+    <!--    <bean id="accountService" class="top.clearlight.factory.InstanceFactory" factory-method="getAccountService"></bean>-->
+    <bean id="instanceFactory" class="top.clearlight.factory.InstanceFactory"></bean>
+    <bean id="accountService" class="top.clearlight.service.impl.AccountServiceImpl" factory-bean="instanceFactory"
+          factory-method="getAccountService" scope="singleton"></bean>
+
+    <bean id="accountService1" class="top.clearlight.service.impl.AccountServiceImpl">
+        <property name="name" value="Mike"/>
+        <property name="age" value="17"/>
+        <property name="birthday" ref="now"/>
+    </bean>
+
+    <bean id="now" class="java.util.Date"/>
+
+    <bean id="accountService2" class="top.clearlight.service.impl.AccountServiceImpl">
+        <constructor-arg name="name" value="Tide"></constructor-arg>
+        <constructor-arg name="age" value="18"></constructor-arg>
+        <constructor-arg name="birthday" ref="now"/>
+    </bean>
+
+    <!--复杂类型的注入/集合类型的注入-->
+    <bean id="accountService3" class="top.clearlight.service.impl.AccountServiceImpl2">
+        <property name="myStrs">
+            <array>
+                <value>AAA</value>
+                <value>BBB</value>
+                <value>CCC</value>
+            </array>
+        </property>
+
+        <property name="myList">
+            <list>
+                <value>AAA</value>
+                <value>BBB</value>
+                <value>CCC</value>
+            </list>
+        </property>
+
+        <property name="mySet">
+            <set>
+                <value>AAA</value>
+                <value>BBB</value>
+                <value>CCC</value>
+            </set>
+        </property>
+
+        <property name="myMap">
+            <map>
+                <entry key="jack" value="18"/>
+                <entry key="Marry" value="16"/>
+                <entry key="Bob">
+                    <value>19</value>
+                </entry>
+            </map>
+        </property>
+
+        <property name="myPro">
+            <props>
+                <prop key="A">AAA</prop>
+                <prop key="B">BBB</prop>
+            </props>
+        </property>
+    </bean>
+</beans>
