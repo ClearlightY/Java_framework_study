@@ -1,14 +1,13 @@
-package top.clearlight.dao;
+package top.clearlight.service;
 
 import top.clearlight.domain.Account;
 
 import java.util.List;
 
 /**
- * 账户的持久层接口
- *
+ * 账户的业务层接口
  */
-public interface AccountDao {
+public interface AccountService {
 
     /**
      * 查询所有
@@ -39,4 +38,5 @@ public interface AccountDao {
      * @param accountId
      */
     void deleteAccount(Integer accountId);
+
 }
