@@ -19,11 +19,7 @@ import java.util.List;
 public class AccountServiceImpl implements AccountService {
 
     private AccountDao accountDao;
-    private TransactionManager txManager;
 
-    public void setTxManager(TransactionManager txManager) {
-        this.txManager = txManager;
-    }
 
     public List<Account> findAllAccount() {
         return accountDao.findAllAccount();
@@ -47,11 +43,13 @@ public class AccountServiceImpl implements AccountService {
 
     /**
      * 由于每次获取一个连接, 导致无法实现事务控制
+     *
      * @param sourceName    转出账户名称
      * @param targetName    转入账户名称
      * @param money         持有金额
      */
     public void transfer(String sourceName, String targetName, Float money) {
+        System.out.println("transfer...");
         // 2.1 根据名称查询转出账户
         Account source = accountDao.findAccountByName(sourceName);
         // 2.2 根据名称查询转入账户
@@ -63,7 +61,7 @@ public class AccountServiceImpl implements AccountService {
         // 2.5 更新转出账户
         accountDao.updateAccount(source);
 
-        int i = 1 / 0;
+        // int i = 1 / 0;
 
         // 2.6 更新转入账户
         accountDao.updateAccount(target);

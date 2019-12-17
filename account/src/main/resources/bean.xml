@@ -10,12 +10,21 @@
         <!--<constructor-arg name="ds" ref="dataSource"></constructor-arg>-->
     </bean>
 
+    <!--配置代理的service-->
+    <bean id="proxyAccountService" factory-bean="beanFactory" factory-method="getAccountService"></bean>
+
+    <!--配置beanfactory-->
+    <bean id="beanFactory" class="top.clearlight.factory.BeanFactory">
+        <!--注入service-->
+        <property name="accountService" ref="accountService"/>
+        <!--注入事务管理器-->
+        <property name="txManager" ref="txManager"/>
+    </bean>
+
     <!--配置Service-->
     <bean id="accountService" class="top.clearlight.service.impl.AccountServiceImpl">
         <!--注入dao-->
         <property name="accountDao" ref="accountDao"></property>
-        <!--注入事务管理器-->
-        <property name="txManager" ref="txManager"></property>
     </bean>
 
     <!--配置Dao对象-->
