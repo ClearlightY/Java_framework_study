@@ -20,6 +20,6 @@ public class JdbcTemplateImpl1 {
         JdbcTemplate jt = new JdbcTemplate();
         jt.setDataSource(ds);
         // 2. 执行操作
-        jt.execute("insert into account(name,money) values('cdc',1000)");
+        jt.execute("insert into account(name,money) values('cac',1000)");
     }
 }

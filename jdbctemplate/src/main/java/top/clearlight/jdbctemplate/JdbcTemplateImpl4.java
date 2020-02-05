@@ -26,7 +26,7 @@ public class JdbcTemplateImpl4 {
         Account account = accountDao.findAccountById(1);
         System.out.println(account);
 
-        account.setMoney(666660f);
+        account.setMoney(7776660f);
         accountDao.updateAccount(account);
     }
 }
