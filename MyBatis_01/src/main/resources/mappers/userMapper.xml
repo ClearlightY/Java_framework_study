@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--特别注意，有2个约定==
+    1、映射文件的namespace的取值必须和dao接口的完整类名一致
+    2、id的取值必须和dao接口中的方法名保持一致-->
+
+<!--namespace必须制定, 类似java中的包名称-->
+<mapper namespace="top.clearlight.dao.UserDao">
+    <!--id的取值, 要求在本文件中要唯一
+    parameterType: 包存的数据的java类型. 一般可以省略不写
+    sql语句: 在mybatis中, 使用#号代表占位符
+            #{username}:获取parameterType指定类型对象的getUsername方法
+     -->
+    <insert id="saveUser" parameterType="top.clearlight.domain.User">
+        insert into t_user
+            (username, gender, age, address, qq, email)
+        values (#{username}, #{gender}, #{age}, #{address}, #{qq}, #{email})
+    </insert>
+
+    <update id="updateUser">
+        update t_user
+        set username=#{username},
+            gender=#{gender},
+            age=#{age},
+            address=#{address},
+            qq=#{qq},
+            email=#{email}
+        where uid = #{uid}
+    </update>
+
+    <!--TypeAliasRegistry注册了一些别名
+        当参数是一个简单类型(string或基本), 占位符名称可以随便写. 建议见名之意
+    -->
+    <delete id="delUser" parameterType="int">
+        delete
+        from t_user
+        where uid = #{uid}
+    </delete>
+
+    <!--结果集的字段名(非表的字段名)和实体类属性名一致-->
+    <!--resultType指定实体对应的类型, 一般不能省略-->
+    <select id="findAllUsers1" resultType="top.clearlight.domain.User">
+        select *
+        from t_user
+    </select>
+
+    <!--结果集的字段名(非表的字段名)和实体类属性不一致-->
+    <!--手动映射-->
+    <resultMap id="userMap" type="top.clearlight.domain.User">
+        <!--id元素, 专门映射主键的. column: 结果集的字段名; property:实体类的属性名-->
+        <id column="u_id" property="uid"/>
+        <!--result元素, 映射非主键字段-->
+        <result column="u_username" property="username"/>
+    </resultMap>
+
+    <select id="findAllUsers2" resultMap="userMap">
+        select uid u_id, username u_username
+        from t_user
+    </select>
+
+    <!--只有一个简单类型的参数-->
+    <select id="findUserByUid" resultType="top.clearlight.domain.User">
+        select *
+        from t_user
+        where uid = #{uid}
+    </select>
+
+    <!--有多个简单类型的参数:
+    select * from t_user where uid=#{arg0} and username=#{arg1}
+    arg0: 第一个参数 arg1: 第二个参数, 一次类推
+    select * from t_user where uid=#{param1} and username=#{param2}
+    param1: 第一个参数 param2:第二个参数, 一次类推
+    -->
+    <select id="findUserByUidUsername" resultType="top.clearlight.domain.User">
+        select *
+        from t_user
+        where uid = #{uid}
+          and username = #{username}
+    </select>
+
+    <select id="findUserByUidUsername1" resultType="top.clearlight.domain.User">
+        select *
+        from t_user
+        where uid = #{uid}
+          and username = #{username}
+    </select>
+
+</mapper>
