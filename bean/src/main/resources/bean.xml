@@ -22,7 +22,7 @@
         <property name="birthday" ref="now"/>
     </bean>
 
-    <bean id="now" class="java.util.Date"/>
+    <bean id="now" class="java.top.clearlight.util.Date"/>
 
     <bean id="accountService2" class="top.clearlight.service.impl.AccountServiceImpl">
         <constructor-arg name="name" value="Tide"></constructor-arg>

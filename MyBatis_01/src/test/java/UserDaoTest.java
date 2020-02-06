@@ -70,4 +70,25 @@ public class UserDaoTest extends BaseTester {
         User user = userDao.findUserByUidUsername1(vo);
         System.out.println(user);
     }
+
+    @Test
+    public void testFind4() {
+        UserDao userDao = sqlSession.getMapper(UserDao.class);
+        List<User> users = userDao.findUserByUsername1("%甜%");
+        System.out.println(users);
+    }
+
+    @Test
+    public void testFind5() {
+        UserDao userDao = sqlSession.getMapper(UserDao.class);
+        List<User> users = userDao.findUserByUsername2("甜");
+        System.out.println(users);
+    }
+
+    @Test
+    public void test6() {
+        UserDao userDao = sqlSession.getMapper(UserDao.class);
+        List<User> users = userDao.findUserByUsername3("甜");
+        System.out.println(users);
+    }
 }

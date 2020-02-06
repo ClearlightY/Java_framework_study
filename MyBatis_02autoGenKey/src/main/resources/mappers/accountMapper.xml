@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--特别注意，有2个约定==
+    1、映射文件的namespace的取值必须和dao接口的完整类名一致
+    2、id的取值必须和dao接口中的方法名保持一致-->
+
+<!--namespace必须制定, 类似java中的包名称-->
+<mapper namespace="top.clearlight.dao.AccountDao">
+
+    <!--方式一自动映射: 借助SQL的别名实现:
+        user.username: 找Account的user属性中的username属性, 并设置值
+    -->
+    <select id="findAllAccountsWithUser" resultType="top.clearlight.domain.Account">
+        select a.*, u.uid 'user.uid', u.username 'user.username'
+        from ee111.account a
+                 left join user u on a.uid = u.uid
+    </select>
+
+
+</mapper>

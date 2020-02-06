@@ -53,4 +53,16 @@ public class UserDaoImpl implements UserDao {
     public User findUserByUidUsername1(UserVO vo) {
         return null;
     }
+
+    public List<User> findUserByUsername1(String username) {
+        return null;
+    }
+
+    public List<User> findUserByUsername2(String username) {
+        return null;
+    }
+
+    public List<User> findUserByUsername3(String username) {
+        return null;
+    }
 }

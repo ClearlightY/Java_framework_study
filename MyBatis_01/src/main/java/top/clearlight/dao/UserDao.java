@@ -23,4 +23,10 @@ public interface UserDao {
 
     User findUserByUidUsername1(UserVO vo);
 
+    List<User> findUserByUsername1(String username);
+
+    List<User> findUserByUsername2(String username);
+
+    List<User> findUserByUsername3(String username);
+
 }

@@ -87,4 +87,30 @@
           and username = #{username}
     </select>
 
+    <!--模糊查询-->
+    <select id="findUserByUsername1" resultType="top.clearlight.domain.User">
+        select *
+        from t_user
+        where username
+                  like #{name}
+    </select>
+
+    <!--模糊查询方式二(推荐)-->
+    <select id="findUserByUsername2" resultType="top.clearlight.domain.User">
+        select *
+        from t_user
+        where username like concat('%', #{name}, '%')
+    </select>
+
+    <!--模糊查询方式三(了解)-->
+    <!--${}代表是 字符串拼接, 不是占位符
+        如果参数只有一个, 且是简单类型, 需要使用固定值value
+        或者@Param改变名称
+     -->
+    <select id="findUserByUsername3" resultType="top.clearlight.domain.User">
+        select *
+        from t_user
+        where username like '%${value}%'
+    </select>
+
 </mapper>

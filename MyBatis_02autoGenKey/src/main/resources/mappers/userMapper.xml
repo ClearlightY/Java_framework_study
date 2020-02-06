@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--特别注意，有2个约定==
+    1、映射文件的namespace的取值必须和dao接口的完整类名一致
+    2、id的取值必须和dao接口中的方法名保持一致-->
+
+<!--namespace必须制定, 类似java中的包名称-->
+<mapper namespace="top.clearlight.dao.UserDao">
+    <!--
+     useGeneratedKeys: true. 表示获取数据库生成的主键
+     keyColumn: 指定主键字段名称
+     keyProperty: 生成的主键封装到参数的那个属性中
+    -->
+    <insert id="saveUser1" useGeneratedKeys="true" keyColumn="uid" keyProperty="uid">
+        insert into user (username) value (#{username})
+    </insert>
+
+    <!--
+        keyColumn: 指定主键字段名称
+        keyProperty: 生成的主键封装到参数的那个属性中
+        resultType: 主键的java类型
+        order: 在插入语句之前获取还是插入与之后获取. MySQL: 之后. Oracle: 之前
+    -->
+    <insert id="saveUser2">
+        <selectKey keyColumn="uid" keyProperty="uid" resultType="int" order="AFTER">
+            select last_insert_id()
+        </selectKey>
+        insert into user (username) values(#{username})
+    </insert>
+
+    <select id="findUsers" parameterType="top.clearlight.domain.User"
+            resultType="top.clearlight.domain.User">
+        select *
+        from user
+        where 1 = 1
+        <if test="uid!=null">
+            and uid=#{uid}
+        </if>
+        <if test="username!=null">
+            and username=#{username}
+        </if>
+    </select>
+
+    <update id="updateUser" parameterType="top.clearlight.domain.User">
+        update user set
+        <if test="username!=null">
+            username=#{username},
+        </if>
+        <if test="gender!=null">
+            gender=#{gender},
+        </if>
+        uid=#{uid}
+        where uid=#{uid}
+    </update>
+
+    <insert id="saveUser3">
+        insert into user (
+        <if test="username!=null">
+            username,
+        </if>
+        <if test="gender!=null">
+            gender
+        </if>
+        ) value (
+        <if test="username!=null">
+            #{username},
+        </if>
+        <if test="gender!=null">
+            #{gender}
+        </if>
+        );
+    </insert>
+
+    <!--
+    foreach: 循环遍历输出主体内容
+    支持的参数类型:
+        数组: 默认应用的占位符名称 array
+        List: 默认应用的占位符名称 collection或list
+        Set: 默认应用的占位符名称 collection
+        Map: 默认应用的占位符名称 parameter
+    -->
+    <!--
+    collection: 是一个表达式. 获取要遍历的数据
+    item: 是一个字符串. 引用当前遍历的元素
+    open: 遍历开始之前输出的字符串, 执行一次
+    separator: 元素之间的分隔符
+    close: 遍历结束之后输出的字符串, 执行一次
+    -->
+    <select id="findUsers1" resultType="top.clearlight.domain.User">
+        select * from user where uid in
+        <foreach collection="array" item="uid" open="(" separator="," close=")">
+            #{uid}
+        </foreach>
+    </select>
+
+    <select id="findUsers2" resultType="top.clearlight.domain.User">
+        select * from user where uid in
+        <foreach collection="list" item="uid" open="(" separator="," close=")">
+            #{uid}
+        </foreach>
+    </select>
+
+    <select id="findUsers3" resultType="top.clearlight.domain.User">
+        select * from user where uid in
+        <foreach collection="collection" item="uid" open="(" separator="," close=")">
+            #{uid}
+        </foreach>
+    </select>
+
+    <select id="findUsers4" resultType="top.clearlight.domain.User">
+        select * from user where uid in
+        <foreach collection="_parameter" item="me" open="(" separator="," close=")">
+            #{me.value}
+        </foreach>
+    </select>
+
+    <!--choose when otherwise-->
+    <select id="findUsers5" resultType="top.clearlight.domain.User">
+        select * from user
+        <where>
+            <choose>
+                <when test="username!=null">
+                    and username=#{username}
+                </when>
+                <when test="gender!=null">
+                    and gender=#{gender}
+                </when>
+                <otherwise>
+                    and 1=3
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+
+    <!--
+        where格式化标签:
+            1. 没有主体内容. 什么都不发生.
+            2. 有主体内容. 会在语句的末尾自动加上where关键字, 同时会去掉第一个and
+    -->
+    <select id="findUsers" parameterType="top.clearlight.domain.User" resultType="top.clearlight.domain.User">
+        select * from user
+        <where>
+            <if test="uid!=null">
+                and uid=#{uid}
+            </if>
+            <if test="username!=null">
+                and username=#{username}
+            </if>
+        </where>
+    </select>
+
+    <!--
+        set: 格式化标签
+            1. 如果没有主体内容. 不会加上set关键字. 在修改数据时, 没有set是不合法的
+            2. 如果有主体内容. 会加上set关键字, 同时删除最后一个逗号
+    -->
+    <update id="updateUser" parameterType="top.clearlight.domain.User">
+        update user
+        <set>
+            <if test="username!=null">
+                username=#{usernmae},
+            </if>
+            <if test="geneder!=null">
+                gender=#{gender},
+            </if>
+            uid=#{uid},
+        </set>
+        where uid=#{uid}
+    </update>
+
+    <select id="findUsers" parameterType="top.clearlight.domain.User"
+            resultType="top.clearlight.domain.User">
+        select * from user
+        <trim prefix="where" prefixOverrides="and">
+            <if test="uid!=null">
+                and uid=#{uid}
+            </if>
+            <if test="username!=null">
+                and username=#{username}
+            </if>
+        </trim>
+    </select>
+
+    <update id="updateUser" parameterType="top.clearlight.domain.User">
+        update user
+        <trim prefix="set" suffixOverrides=",">
+            <if test="username!=null">
+                username=#{username},
+            </if>
+            <if test="gender!=null">
+                gender=#{gender},
+            </if>
+            uid=#{uid},
+        </trim>
+        where uid=#{uid}
+    </update>
+
+
+</mapper>
