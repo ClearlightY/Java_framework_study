@@ -139,7 +139,7 @@
             1. 没有主体内容. 什么都不发生.
             2. 有主体内容. 会在语句的末尾自动加上where关键字, 同时会去掉第一个and
     -->
-    <select id="findUsers" parameterType="top.clearlight.domain.User" resultType="top.clearlight.domain.User">
+    <!--<select id="findUsers" parameterType="top.clearlight.domain.User" resultType="top.clearlight.domain.User">
         select * from user
         <where>
             <if test="uid!=null">
@@ -149,14 +149,14 @@
                 and username=#{username}
             </if>
         </where>
-    </select>
+    </select>-->
 
     <!--
         set: 格式化标签
             1. 如果没有主体内容. 不会加上set关键字. 在修改数据时, 没有set是不合法的
             2. 如果有主体内容. 会加上set关键字, 同时删除最后一个逗号
     -->
-    <update id="updateUser" parameterType="top.clearlight.domain.User">
+    <!--<update id="updateUser" parameterType="top.clearlight.domain.User">
         update user
         <set>
             <if test="username!=null">
@@ -168,9 +168,10 @@
             uid=#{uid},
         </set>
         where uid=#{uid}
-    </update>
+    </update>-->
 
-    <select id="findUsers" parameterType="top.clearlight.domain.User"
+    <!--trim-->
+    <!--<select id="findUsers" parameterType="top.clearlight.domain.User"
             resultType="top.clearlight.domain.User">
         select * from user
         <trim prefix="where" prefixOverrides="and">
@@ -195,7 +196,62 @@
             uid=#{uid},
         </trim>
         where uid=#{uid}
-    </update>
+    </update>-->
+
+    <resultMap id="userMap" type="top.clearlight.domain.User">
+        <id column="uid" property="uid"/>
+        <result column="username" property="username"/>
+    </resultMap>
+    <resultMap id="userAccountMap" extends="userMap" type="top.clearlight.domain.User">
+        <collection property="accounts" column="uid" ofType="top.clearlight.domain.Account">
+            <id column="aid" property="aid"/>
+            <result column="number" property="number"/>
+            <result column="balance" property="balance"/>
+        </collection>
+    </resultMap>
+
+    <select id="findAllUsersWithAccounts" resultMap="userAccountMap">
+        select *
+        from user u
+                 left join ee111.account a on u.uid = a.uid
+    </select>
+
+    <resultMap id="userRoleMap" type="top.clearlight.domain.User" extends="userMap">
+        <collection property="roles" column="uid" ofType="top.clearlight.domain.Role">
+            <id column="rid" property="rid"/>
+            <result column="name" property="name"/>
+            <result column="description" property="description"/>
+        </collection>
+    </resultMap>
+
+    <select id="findAllUsersWithRoles" resultMap="userRoleMap">
+        select u.*, r.*
+        from user u
+                 left join user_role ur on u.uid = ur.uid
+                 left join role r on ur.rid = r.rid
+    </select>
+
+    <select id="findUserByUid" resultType="top.clearlight.domain.User">
+        select *
+        from user
+        where uid = #{uid}
+    </select>
+
+    <resultMap id="userRoleMap1" type="top.clearlight.domain.User" extends="userMap">
+        <!--1. fetchType不写: 采用全局的配置-->
+        <!--2. fetchType编写: 优先级高于全局配置
+                            lazy: 延迟加载
+                            eager: 立即加载
+        -->
+        <collection property="roles" column="uid" ofType="top.clearlight.domain.Role"
+                    select="top.clearlight.dao.RoleDao.findRolesByUid"
+                    fetchType="lazy"
+        />
+    </resultMap>
+    <select id="findAllUsersWithRoles1" resultMap="userRoleMap1">
+        select *
+        from user
+    </select>
 
 
 </mapper>

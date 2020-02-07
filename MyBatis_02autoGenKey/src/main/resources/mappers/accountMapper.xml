@@ -12,11 +12,74 @@
     <!--方式一自动映射: 借助SQL的别名实现:
         user.username: 找Account的user属性中的username属性, 并设置值
     -->
-    <select id="findAllAccountsWithUser" resultType="top.clearlight.domain.Account">
-        select a.*, u.uid 'user.uid', u.username 'user.username'
+    <!-- <select id="findAllAccountsWithUser" resultType="top.clearlight.domain.Account">
+         select a.*, u.uid 'user.uid', u.username 'user.username'
+         from ee111.account a
+                  left join user u on a.uid = u.uid
+     </select>-->
+
+    <!--方式二: 手动映射-->
+    <!--  <resultMap id="accountMap" type="top.clearlight.domain.Account">
+          <id column="aid" property="aid"/>
+          <result column="number" property="number"/>
+          <result column="balance" property="balance"/>
+          <result column="uid" property="user.uid"/>
+          <result column="username" property="user.username"/>
+      </resultMap>
+      <select id="findAllAccountsWithUser" resultMap="accountMap">
+          select *
+          from ee111.account a
+                   left join user u on a.uid = u.uid
+      </select>-->
+
+    <!--方式三(推荐):mybatis对于少的一方的映射, 专门提供了一个标签-->
+    <!--<resultMap id="accountMap" type="top.clearlight.domain.Account">
+        <id column="aid" property="aid"/>
+        <result column="number" property="number"/>
+        <result column="balance" property="balance"/>
+        <association property="user" column="uid" javaType="top.clearlight.domain.User">
+            <id column="uid" property="uid"/>
+            <result column="username" property="username"/>
+        </association>
+    </resultMap>
+    <select id="findAllAccountsWithUser" resultMap="accountMap">
+        select *
         from ee111.account a
                  left join user u on a.uid = u.uid
-    </select>
+    </select>-->
 
+   <!-- <resultMap id="accountMap" type="top.clearlight.domain.Account">
+        <id column="aid" property="aid"/>
+        <result column="number" property="number"/>
+        <result column="balance" property="balance"/>
+    </resultMap>
+
+    <resultMap id="accountUserMap" extends="accountMap" type="top.clearlight.domain.Account">
+        <association property="user" column="uid" javaType="top.clearlight.domain.User">
+            <id column="uid" property="uid"/>
+            <result column="username" property="username"/>
+        </association>
+    </resultMap>-->
+
+    <!--<select id="findAllAccountsWithUser" resultMap="accountUserMap">
+        select *
+        from ee111.account a
+                 left join user u on a.uid = u.uid
+    </select>-->
+
+    <!--根据多查少-->
+    <resultMap id="accountMap" type="top.clearlight.domain.Account">
+        <id column="aid" property="aid"/>
+        <result column="number" property="number"/>
+        <result column="balance" property="balance"/>
+    </resultMap>
+    <resultMap id="accountUserMap" type="top.clearlight.domain.Account" extends="accountMap">
+        <association property="user" column="uid" javaType="top.clearlight.domain.User"
+                     select="top.clearlight.dao.UserDao.findUserByUid"/>
+    </resultMap>
+    <select id="findAllAccountsWithUser" resultMap="accountUserMap">
+        select *
+        from ee111.account
+    </select>
 
 </mapper>

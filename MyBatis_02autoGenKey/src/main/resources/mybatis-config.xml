@@ -3,6 +3,10 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+    <settings>
+        <!--开启全局延迟加载-->
+        <setting name="lazyLoadingEnabled" value="true"/>
+    </settings>
     <environments default="ee111">
         <!--配置的环境主要是数据源有关的内容-->
         <environment id="ee111">
@@ -22,5 +26,6 @@
     <mappers>
         <mapper resource="mappers/userMapper.xml"/>
         <mapper resource="mappers/accountMapper.xml"/>
+        <mapper resource="mappers/roleMapper.xml"/>
     </mappers>
 </configuration>

@@ -40,4 +40,13 @@ public interface UserDao {
      * 动态生成查询条件
      */
     List<User> findUsers5(User vo);
+
+    List<User> findAllUsersWithAccounts();
+
+    List<User> findAllUsersWithRoles();
+
+    User findUserByUid(Integer uid);
+
+    List<User> findAllUsersWithRoles1();
+
 }

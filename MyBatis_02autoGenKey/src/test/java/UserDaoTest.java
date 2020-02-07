@@ -1,5 +1,7 @@
 import org.junit.Test;
+import top.clearlight.dao.AccountDao;
 import top.clearlight.dao.UserDao;
+import top.clearlight.domain.Account;
 import top.clearlight.domain.User;
 
 import java.util.*;
@@ -114,6 +116,50 @@ public class UserDaoTest extends BaseTester {
         List<User> users = userDao.findUsers5(condition);
         for (User user : users) {
             System.out.println(user);
+        }
+    }
+
+    @Test
+    public void test1() {
+        UserDao userDao = sqlSession.getMapper(UserDao.class);
+        List<User> users = userDao.findAllUsersWithAccounts();
+        for (User user : users) {
+            System.out.println("---------------");
+            System.out.println("user:" + user);
+            System.out.println("account:" + user.getAccounts());
+        }
+    }
+
+    @Test
+    public void test2() {
+        UserDao userDao = sqlSession.getMapper(UserDao.class);
+        List<User> users = userDao.findAllUsersWithRoles();
+        for (User user : users) {
+            System.out.println("------------------");
+            System.out.println("user:" + user);
+            System.out.println("role:" + user.getRoles());
+        }
+    }
+
+    @Test
+    public void test() {
+        AccountDao accountDao = sqlSession.getMapper(AccountDao.class);
+        List<Account> accounts = accountDao.findAllAccountsWithUser();
+        for (Account account : accounts) {
+            System.out.println("----------------");
+            System.out.println("Account:" + account);
+            System.out.println("User:" + account.getUser());
+        }
+    }
+
+    @Test
+    public void test12() {
+        UserDao userDao = sqlSession.getMapper(UserDao.class);
+        List<User> users = userDao.findAllUsersWithRoles1();
+        for (User user : users) {
+            System.out.println("----------------");
+            System.out.println("user:" + user);
+            System.out.println("role:" + user.getRoles());
         }
     }
 }
