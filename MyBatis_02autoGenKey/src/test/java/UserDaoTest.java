@@ -162,4 +162,18 @@ public class UserDaoTest extends BaseTester {
             System.out.println("role:" + user.getRoles());
         }
     }
+
+    @Test
+    public void base() {
+        int[] arr = new int[5];
+        for (int i = 1; i <= arr.length; i++) {
+            System.out.println("请输入第" + i + "个1-60之间的数字:");
+            Scanner sc = new Scanner(System.in);
+            int n = sc.nextInt();
+            arr[i-1] = n;
+        }
+        for (int i = 0; i < arr.length; i++) {
+            System.out.println(arr[i]);
+        }
+    }
 }
