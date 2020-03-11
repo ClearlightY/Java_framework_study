@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.clearlight.dao.UserDao">
+    <!--查询所有-->
+    <select id="findAll" resultType="top.clearlight.domain.User">
+        select *
+        from user
+    </select>
+
+    <!--保存用户-->
+    <insert id="saveUser" parameterType="top.clearlight.domain.User">
+        insert into user(username, address, sex, birthday) value (#{username}, #{address}, #{sex}, #{birthday})
+        <!-- 配置插入操作后, 获取插入数据的id -->
+        <selectKey keyProperty="id" keyColumn="id" resultType="java.lang.Integer" order="AFTER">
+            select last_insert_id();
+        </selectKey>
+    </insert>
+
+    <!--更新用户-->
+    <update id="updateUser" parameterType="top.clearlight.domain.User">
+        update user set username=#{username},address=#{address},sex=#{sex},birthday=#{birthday} where id=#{id};
+    </update>
+
+    <!--删除用户-->
+    <delete id="deleteUser" parameterType="Integer">
+        delete from user where id=#{id};
+    </delete>
+
+    <!--根据id查询用户-->
+    <select id="findById" parameterType="Integer" resultType="top.clearlight.domain.User">
+        select * from user where id=#{id};
+    </select>
+
+    <!--根据名称查询用户-->
+    <select id="findByName" parameterType="String" resultType="top.clearlight.domain.User">
+        select * from user where username like #{username};
+    </select>
+
+    <!--查询总用户数-->
+    <select id="findTotal" resultType="Integer">
+        select count(id) from user;
+    </select>
+</mapper>
