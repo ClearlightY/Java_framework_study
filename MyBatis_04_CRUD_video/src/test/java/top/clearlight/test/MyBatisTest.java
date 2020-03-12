@@ -8,6 +8,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import top.clearlight.dao.UserDao;
+import top.clearlight.domain.QueryVo;
 import top.clearlight.domain.User;
 
 import java.io.IOException;
@@ -69,10 +70,10 @@ public class MyBatisTest {
     public void saveUserTest() {
         User user = new User();
         // user.setUsername("mybatis saveUser");
-        user.setUsername("mybatis last insert_id");
-        user.setAddress("Ch");
-        user.setSex("男");
-        user.setBirthday(new Date());
+        user.setUserName("mybatis last insert_id");
+        user.setUserAddress("Ch");
+        user.setUserSex("男");
+        user.setUserBirthday(new Date());
         System.out.println("保存操作之前: " + user);
         // 执行保存方法
         userDao.saveUser(user);
@@ -85,11 +86,11 @@ public class MyBatisTest {
     @Test
     public void updateUserTest() {
         User user = new User();
-        user.setId(2);
-        user.setUsername("mybatis updateUser");
-        user.setAddress("Zh");
-        user.setSex("男");
-        user.setBirthday(new Date());
+        user.setUserId(2);
+        user.setUserName("mybatis updateUser");
+        user.setUserAddress("Zh");
+        user.setUserSex("男");
+        user.setUserBirthday(new Date());
 
         // 执行保存方法
         userDao.updateUser(user);
@@ -136,4 +137,18 @@ public class MyBatisTest {
         System.out.println(num);
     }
 
+    /**
+     * 根据queryVo的条件查询用户
+     */
+    @Test
+    public void testFindByVo() {
+        QueryVo vo = new QueryVo();
+        User user = new User();
+        user.setUserName("%batis%");
+        vo.setUser(user);
+        List<User> users = userDao.findByVo(vo);
+        for (User user1 : users) {
+            System.out.println(user1);
+        }
+    }
 }

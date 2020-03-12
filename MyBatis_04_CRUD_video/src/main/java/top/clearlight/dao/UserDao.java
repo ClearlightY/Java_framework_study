@@ -1,5 +1,6 @@
 package top.clearlight.dao;
 
+import top.clearlight.domain.QueryVo;
 import top.clearlight.domain.User;
 
 import java.util.List;
@@ -51,4 +52,11 @@ public interface UserDao {
      */
     int findTotal();
 
+    /**
+     * 根据queryVo的条件查询用户
+     *
+     * @param vo
+     * @return
+     */
+    List<User> findByVo(QueryVo vo);
 }
