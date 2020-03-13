@@ -3,6 +3,14 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+    <typeAliases>
+        <!--typeAlias用于配置别名. type属性指定的是实体类全限定类型.alias属性指定别名, 当制定了别名就不再区分大小写-->
+        <typeAlias type="top.clearlight.domain.User" alias="user"/>
+    </typeAliases>
+ <!--   <typeAliases>
+        &lt;!&ndash;用于指定要配置别名的包, 当指定之后, 该包下的实体类都会注册别名, 并且类名就是别名, 不再区分大小写&ndash;&gt;
+        <package name="top.clearlight.domain"/>
+    </typeAliases>-->
     <!--配置环境-->
     <environments default="mysql">
         <!--配置mysql的环境-->
