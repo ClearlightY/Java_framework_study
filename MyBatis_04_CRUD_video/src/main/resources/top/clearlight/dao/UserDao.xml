@@ -5,7 +5,7 @@
 <mapper namespace="top.clearlight.dao.UserDao">
 
     <!--配置 查询结果的列名和实体类的属性名的对应关系-->
-    <resultMap id="userMap" type="top.clearlight.domain.User">
+    <resultMap id="userMap" type="user">
         <!--主键字段的对应-->
         <id property="userId" column="id"/>
         <!--非主键字段的对应-->
