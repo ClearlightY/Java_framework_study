@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class UserHandler {
 
-    @RequestMapping(path = "/uesr/hello")
+    @RequestMapping(path = "/hello")
     public String hello() {
         System.out.println("hello....");
         // 视图名称

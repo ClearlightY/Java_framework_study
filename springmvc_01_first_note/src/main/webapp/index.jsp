@@ -11,6 +11,7 @@
     <title>主页</title>
 </head>
 <body>
-<a href="${pageContext.request.contextPath}/user/hello">Hello SpringMVC</a>
+<%--<a href="${pageContext.request.contextPath}/user/hello">Hello SpringMVC</a>--%>
+<a href="hello">Hello SpringMVC</a>
 </body>
 </html>
