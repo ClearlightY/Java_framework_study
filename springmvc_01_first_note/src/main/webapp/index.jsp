@@ -12,6 +12,7 @@
 </head>
 <body>
 <%--<a href="${pageContext.request.contextPath}/user/hello">Hello SpringMVC</a>--%>
-<a href="hello">Hello SpringMVC</a>
+<a href="user/hello">Hello SpringMVC</a>
+<a href="user/testRequestMapping?username=jack">Open ResquestMapping</a>
 </body>
 </html>
