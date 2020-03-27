@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    <!--1、配置扫描的包（扫描处理器所在的包）-->
+    <!--自动扫描包, 让指定包下的注解生效, 由IOC容器统一管理-->
+    <context:component-scan base-package="top.clearlight.controller"/>
+
+    <!--2、开启springmvc的注解支持-->
+    <!--
+    支持mvc注解驱动
+        在spring中一般采用@RequestMapping注解来完成映射关系
+        要想使@RequestMapping注解生效
+        必须向上下文中注册DefaultAnnotationHandlerMapping
+        和一个AnnotationMethodHandlerAdapter实例
+        这两个实例分别在类级别和方法级别处理
+        而annotation-driven配置帮助我们自动完成上述两个实例的注入.
+    -->
+    <mvc:annotation-driven/>
+    <!--3、配置视图解析器
+            处理器会返回一个视图的名称，比如success
+            视图解析：/WEB-INF/pages/   + success + .jsp 拼接出真实的视图页面
+    -->
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!--让SpringMVC不处理静态资源 .css .js .html .mp3 .mp4-->
+    <mvc:default-servlet-handler/>
+</beans>
