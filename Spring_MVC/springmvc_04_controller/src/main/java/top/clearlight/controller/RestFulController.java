@@ -2,9 +2,7 @@ package top.clearlight.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author <a href="mail to: lxy12531@163.com" rel="nofollow">lxy</a>
@@ -39,9 +37,23 @@ public class RestFulController {
 
     @RequestMapping("/name/{a}/{name}")
     public String test3(@PathVariable int a, @PathVariable String name, Model model) {
-        String str = a +name;
+        String str = a + name;
         model.addAttribute("msg", "Hello" + str);
         return "hello";
     }
 
+    @PostMapping("/add/{a}/{b}")
+    public String test4(@PathVariable int a, @PathVariable String b, Model model) {
+        String res = a + b;
+        model.addAttribute("msg", "a + b =" + res);
+        return "hello";
+    }
+
+    /* 如果执行http://localhost:8080/add/1/2的话, 将会走test5方法, 因为有参数为get方式请求*/
+    @GetMapping("/add/{a}/{b}")
+    public String test5(@PathVariable int a, @PathVariable String b, Model model) {
+        String res = a + b;
+        model.addAttribute("msg", "a + 'b'=" + res);
+        return "hello";
+    }
 }
