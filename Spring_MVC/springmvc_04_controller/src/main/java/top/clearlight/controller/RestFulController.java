@@ -52,6 +52,8 @@ public class RestFulController {
     /* 如果执行http://localhost:8080/add/1/2的话, 将会走test5方法, 因为有参数为get方式请求*/
     @GetMapping("/add/{a}/{b}")
     public String test5(@PathVariable int a, @PathVariable String b, Model model) {
+        int m;
+
         String res = a + b;
         model.addAttribute("msg", "a + 'b'=" + res);
         return "hello";
