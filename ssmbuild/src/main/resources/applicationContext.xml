@@ -3,12 +3,8 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd">
-    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
-        <property name="jdbcUrl" value="jdbc:mysql:///ee111"/>
-        <property name="user" value="root"/>
-        <property name="password" value="root"/>
-    </bean>
 
-   
+    <import resource="classpath:spring-dao.xml"/>
+    <import resource="classpath:spring-service.xml"/>
+    <import resource="classpath:spring-mvc.xml"/>
 </beans>

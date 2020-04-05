@@ -28,7 +28,7 @@
         where bookName = #{bookName};
     </select>
 
-    <select id="queryAllBook" resultType="top.clearlight.pojo.Books" parameterType="List">
+    <select id="queryAllBook" resultType="top.clearlight.pojo.Books">
         select *
         from ssmbuild.books
     </select>
