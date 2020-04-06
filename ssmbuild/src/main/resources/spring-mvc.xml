@@ -18,7 +18,7 @@
     <context:component-scan base-package="top.clearlight.controller"/>
 
     <!--4. 视图解析器-->
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/jsp/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
