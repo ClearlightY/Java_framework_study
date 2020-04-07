@@ -34,4 +34,9 @@ public class BookController {
         return "allBook";
     }
 
+    @RequestMapping("/toAddPage")
+    public String toAddPage() {
+        return "addBook";
+    }
+
 }
