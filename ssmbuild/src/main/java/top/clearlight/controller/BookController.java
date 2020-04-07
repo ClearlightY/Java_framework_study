@@ -39,4 +39,12 @@ public class BookController {
         return "addBook";
     }
 
+    @RequestMapping("/addBook")
+    public String addBook(Books books) {
+        System.out.println(books);
+        bookService.addBook(books);
+        // 重定向到@RequestMapping("allBook")请求
+        return "redirect:/book/allBook";
+    }
+
 }
