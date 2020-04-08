@@ -56,7 +56,7 @@
                         <td>${book.detail}</td>
                         <td>
                             <a href="#" class="btn btn-info">修改</a>
-                            &nbsp; | &nbsp;
+                            &nbsp;  &nbsp;
                             <a href="#" class="btn btn-info">删除</a>
                         </td>
                     </tr>
